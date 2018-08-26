@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+\usepackage{multicol}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+
+\usepackage{geometry}
+\geometry{top=10mm,left=10mm,right=10mm,bottom=10mm}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{3pt}{3pt}
+
+\begin{document}
+
+\section{Theory of Computation (Summary) \hfill Ayush Nath}
+\bigskip
+\large
+\textbf{1. Automata and Languages}
+\small
+\begin{multicols}{2}
+\textbf{1.1. Regular Languages}\\\vspace{-3mm}
+\\
+\textbf{Def.} A (deterministic) \textbf{finite automaton} is a 5-tuple $(Q, \Sigma, \delta, q_{o}, F),$ where\vspace{-3mm}
+\begin{enumerate}
+\itemsep-0.5em
+\item $Q$ is a finite set called the \textbf{states},
+\item $\Sigma$ is a finite set called the \textbf{alphabet},
+\item $\delta: Q \times \Sigma \rightarrow Q$ is the \textbf{transition function},
+\item $q_{o} \in Q$ is the \textbf{start state}, and
+\item $F \subseteq Q$ is the set of \textbf{accepted/final states}
+\end{enumerate}\vspace{-2mm}
+\textbf{Def.} A language is called a \textbf{regular language} if some finite automaton recognizes it.\\
+Ex. A language that has strings ending with 0; A language that has strings with substring 010.\\\vspace{-3mm}
+\\
+The class of regular languages is closed under the following operations:
+\begin{enumerate}
+\itemsep-0.5em
+\item \textbf{Union}: $A \cup B = \lbrace x \mid x \in A or x \in B \rbrace.$
+\item \textbf{Concatenation}: $A \circ B = \lbrace xy \mid x,y \in A,B \rbrace.$
+\item \textbf{Star}: $A^{*} = \lbrace x_{1}, x_{2}, \dots, x_{k} \mid k \geq 0 $ and each $ x_{i} \in A \rbrace.$
+\end{enumerate}
+\textbf{Determinism}- When the machine is in a given state and reads the next input symbol, the next state is unique and already determined.\\
+\textbf{Nondeterminism}- Several choices may exist for the next state at any point.\\
+\\
+\textbf{Def.} A \textbf{nondeterministic finite automaton} is the same 5-tuple, except
+\begin{center}
+$\delta: Q \times \Sigma_{\epsilon} \rightarrow P(Q)$
+\end{center}
+\textbf{Theorem.} Every NFA has an equivalent DFA.\\
+\textbf{Corollary.} A language is regular if and only if some NFA recognizes it.\\
+\\
+\textbf{Def.} R is a \textbf{regular expression} if R is
+\begin{enumerate}
+\itemsep-0.5em
+\item $a$ for some $a$ is the alphabet $\Sigma$,
+\item $\varepsilon$,
+\item $\phi$,
+\item $(R_{1} \cup R_{2}),$ where $R_{1}$ and $R_{2}$ are regular expressions,
+\item $(R_{1} \circ R_{2}),$ where $R_{1}$ and $R_{2}$ are regular expressions, or
+\item $(R_{1}^{*})$, where $R_{1}$ is a regular expression.
+\end{enumerate}
+\textbf{Theorem.} A language is regular iff some regular expression describes it.\\
+\textbf{Note.} Every regular language can be converted into an NFA.\\
+\textbf{Note.} DFAs can be reduced to minimized DFAs.\\
+\\
+\textbf{Nonregular languages} are those that cannot be recognized by DFAs.\\
+Ex. $\lbrace 0^{n}1^{n} | n \geq 0 \rbrace.$\\\\
+\textbf{Theorem. Pumping Lemma} If $A$ is a regular language, then $\exists$ a number $p$ (the pumping length) where if any $s \in A$ s.t. $|a| \geq p,$ then $s$ can be divided into 3 pieces, $s=xyz$, s.t.
+\begin{enumerate}
+\itemsep-0.5em
+\item for each $i \geq 0, xy^{i}z \in A,$
+\item $|y| > 0,$ and
+\item $|xy| \leq p.$
+\end{enumerate}
+Pumping Lemma can help differentiate between regular and nonregular languages.\\\\
+\textbf{1.2. Context-free grammars}\\
+\textbf{Def.} A CFG is a 4-tuple $(V, \Sigma, R, S),$ where
+\begin{enumerate}
+\itemsep-0.5em
+\item $V$ is a finite set called the variables,
+\item $\Sigma$ is a finite set, disjoint from V , called the terminals,
+\item $R$ is a finite set of rules, with each rule being a variable and a
+string of variables and terminals, and
+\item $S \in V$ is the start variable.
+\end{enumerate}
+A left hand derivation exists for every string $s \in L(CFG).$ The language of the grammar is $\lbrace w \in \Sigma^{*} | S \Rightarrow^{*} w \rbrace.$\\
+Grammars can be unambiguous (i.e. each string has a unique LH derivation) or ambiguous (i.e. string has two or more LH derivations), or even inherently ambiguous.\\
+\textbf{Note.} A context-free grammar is in Chomsky normal form if every rule is of the form
+\begin{center}
+$A \rightarrow BC$\\
+$A \rightarrow a$\\
+$S \rightarrow \varepsilon$
+\end{center}
+\textbf{Def.} A (nondeterministic) \textbf{pushdown automaton} is a 6-tuple $(Q, \Sigma, \varsigma, \delta, q_{0}, F),$ where
+\begin{enumerate}
+\item $Q$ is the set of states,
+\item $\Sigma$ is the input alphabet,
+\item $\varsigma$ is the stack alphabet,
+\item $\delta : Q \times \Sigma_{\varepsilon} \times \varsigma_{\varepsilon} \Rightarrow P(Q \times \varsigma_{\varepsilon})$ is the transition function,
+\item $q_{0} \in Q$ is the start state, and
+\item $F \subseteq Q$ is the set of accept states.
+\end{enumerate}
+\textbf{Theorem.}A language $A$ is a CFL iff $\exists$ a PDA $P$ s.t. $L(P) = A.$\\
+Ex. $\lbrace 0^{i}1^{j}2^{k} | i \neq j or j \neq k, i,j,k \geq 0 \rbrace \in CFL.$\\\\
+\textbf{Def.} A \textbf{deterministic PDA} is the same 5-tuple, except
+\begin{center}
+$\delta : Q \times \Sigma_{\varepsilon} \times \varsigma_{\varepsilon} \Rightarrow Q \times \varsigma_{\varepsilon} \cup \lbrace \phi \rbrace.$
+\end{center}
+s.t. $\forall q \in Q, a \in \Sigma, b \in \varsigma$ we have exactly one of the following to be non-empty:
+\begin{center}
+$\delta(q,a,b), \delta(q,a,\varepsilon), \delta(a,\varepsilon,b), \delta(\varepsilon,\varepsilon,\varepsilon)$
+\end{center}
+\textbf{Theorem.}A language $A$ is a DCFL iff $\exists$ a DPDA $D$ s.t. $L(D) = A.$\\
+Ex. $\lbrace 0^{n}1^{n} | n \geq 0 \rbrace \in DCFL \setminus RL.$\\\\
+\textbf{Note.} PDAs can either accept by final state or by emptying the stack.\\
+\textbf{Note.} Every DPDA has an equivalent DPDA that always reads the entire input string.\\
+\textbf{Note.} If $A = N(P)$ ,i.e. accepted by emptying the stack, then $A$ is prefix-free.\\\\
+\textbf{Note.} CFLs are closed under union, intersections and complement.\\
+\textbf{Note.} DCFLs are closed under complement.\\\\
+\textbf{Def.} A \textbf{DCFG} is a CFG such that every valid string has a forced handle.
+$\exists$ a similar pumping lemma for non-context-free languages where the string can be divided into five pieces instead, $s = uv^{i}xy^{i}z.$
+\end{multicols}\pagebreak
+\end{document}

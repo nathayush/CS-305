@@ -1,0 +1,3 @@
+a b c @ g
+a.(a|b|c)*.@.g.(a|b|c)*
+abbbc
